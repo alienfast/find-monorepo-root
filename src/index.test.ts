@@ -9,31 +9,43 @@ const packages = ['package-a', 'package-b', 'package-c']
 const clients = ['pnpm', 'yarn', 'bolt', 'lerna']
 
 describe('findMonorepoRoot', () => {
-  clients.forEach((client) => {
-    for (const pkg of packages) {
-      it(`should find root using ${client} from ${pkg}`, async () => {
-        const root = path.join(cwd, client)
+  describe('should find root', () => {
+    clients.forEach((client) => {
+      describe(`using ${client}`, () => {
+        for (const pkg of packages) {
+          it(`from subdirectory ${client}/packages/${pkg}`, async () => {
+            const root = path.join(cwd, client)
 
-        const result = await findMonorepoRoot(path.join(root, 'packages', pkg))
-        expect(result.client).toBe(client)
-        expect(result.dir).toBe(root)
+            const result = await findMonorepoRoot(path.join(root, 'packages', pkg))
+            expect(result.client).toBe(client)
+            expect(result.dir).toBe(root)
+          })
+        }
+
+        it(`from .`, async () => {
+          const root = path.join(cwd, client)
+
+          const result = await findMonorepoRoot(root)
+          expect(result.client).toBe(client)
+          expect(result.dir).toBe(root)
+        })
+
+        it(`from non-package root subdirectory '${client}/packages/package-a/scripts'`, async () => {
+          const root = path.join(cwd, client)
+
+          const result = await findMonorepoRoot(path.join(root, 'packages', 'package-a', 'scripts'))
+          expect(result.client).toBe(client)
+          expect(result.dir).toBe(root)
+        })
+
+        it(`from non-package root from subdirectory '${client}/scripts'`, async () => {
+          const root = path.join(cwd, client)
+
+          const result = await findMonorepoRoot(path.join(root, 'scripts'))
+          expect(result.client).toBe(client)
+          expect(result.dir).toBe(root)
+        })
       })
-    }
-
-    it(`should find root from non-package root using ${client} from 'package-a/scripts'`, async () => {
-      const root = path.join(cwd, client)
-
-      const result = await findMonorepoRoot(path.join(root, 'packages', 'package-a', 'scripts'))
-      expect(result.client).toBe(client)
-      expect(result.dir).toBe(root)
-    })
-
-    it(`should find root from non-package root using ${client} from 'scripts'`, async () => {
-      const root = path.join(cwd, client)
-
-      const result = await findMonorepoRoot(path.join(root, 'scripts'))
-      expect(result.client).toBe(client)
-      expect(result.dir).toBe(root)
     })
   })
 
