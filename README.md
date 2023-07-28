@@ -1,9 +1,7 @@
-<p>
-<a href="/LICENSE"><img src="https://img.shields.io/github/license/alienfast/find-monorepo-root?style=flat-square" alt="MIT License"></a>
-<a href="https://www.typescriptlang.org"><img alt="Language" src="https://img.shields.io/badge/language-TypeScript-blue.svg?style=flat-square"></a>
-<a href="https://github.com/alienfast/find-monorepo-root/pulls"><img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-Welcome-brightgreen.svg?style=flat-square"></a>
-<a href="https://github.com/alienfast/find-monorepo-root/actions/workflows/release.yml"><img alt="build" src="https://img.shields.io/github/actions/workflow/status/alienfast/find-monorepo-root/release.yml?branch=main&logo=github&style=flat-square"></a>
-</p>
+![MIT](https://img.shields.io/github/license/alienfast/find-monorepo-root?style=for-the-badge)
+![Version](https://img.shields.io/github/package-json/v/alienfast/find-monorepo-root?style=for-the-badge)
+![CI](https://img.shields.io/github/actions/workflow/status/alienfast/find-monorepo-root/release.yml?style=for-the-badge)
+![PRs Welcome](https://img.shields.io/badge/PRs-Welcome-brightgreen.svg?style=for-the-badge)
 
 # @alienfast/find-monorepo-root
 
