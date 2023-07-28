@@ -1,7 +1,7 @@
-export type Client = 'bolt' | 'yarn' | 'pnpm' | 'lerna' | 'npm'
+export type Strategy = 'bolt' | 'yarn' | 'pnpm' | 'lerna' | 'npm'
 
-export interface Result<T extends Client = Client> {
-  client: T
+export interface Result<T extends Strategy = Strategy> {
+  strategy: T
   dir: string
 }
 

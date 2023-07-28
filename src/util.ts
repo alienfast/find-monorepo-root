@@ -3,7 +3,7 @@ import path from 'node:path'
 
 import stripJsonComments from 'strip-json-comments'
 
-import { Client, Lerna, Package, Result } from './types'
+import { Lerna, Package, Result, Strategy } from './types'
 
 export const exists = (dir: string, file: string) => fs.existsSync(path.join(dir, file))
 
@@ -20,7 +20,7 @@ export function readJson<T>(dir: string, file: string) {
   }
 }
 
-const determinePackageManager = (pkg: Package, dir: string): Client | undefined => {
+const determinePackageManager = (pkg: Package, dir: string): Strategy | undefined => {
   // in order to run the tests, we need to exclude our own package dir
   if (process.env.NODE_ENV === 'test' && pkg.name === '@alienfast/find-monorepo-root') {
     return undefined
@@ -43,17 +43,17 @@ const determinePackageManager = (pkg: Package, dir: string): Client | undefined 
   return undefined
 }
 
-export const findByPackageManager = (dir: string): Result<Client> | undefined => {
+export const findByPackageManager = (dir: string): Result<Strategy> | undefined => {
   const pkg = readJson<Package>(dir, 'package.json')
   if (!pkg) {
     return undefined
   }
 
-  const client = determinePackageManager(pkg, dir)
-  if (!client) {
+  const strategy = determinePackageManager(pkg, dir)
+  if (!strategy) {
     return undefined
   }
-  return { client, dir }
+  return { strategy, dir }
 }
 
 export const findLerna = (dir: string): Result<'lerna'> | undefined => {
@@ -61,7 +61,7 @@ export const findLerna = (dir: string): Result<'lerna'> | undefined => {
   // https://lerna.js.org/docs/api-reference/configuration
   if (lerna) {
     if (lerna.useWorkspaces || lerna.packages) {
-      return { client: 'lerna', dir }
+      return { strategy: 'lerna', dir }
     }
   }
   return undefined

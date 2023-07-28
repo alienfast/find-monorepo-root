@@ -50,7 +50,7 @@ const cwd = process.cwd()
 
 console.log(await findMonorepoRoot(cwd))
 // {
-//   client: 'lerna', // the monorepo client(pnpm, lerna, yarn, bolt)
+//   strategy: 'lerna', // 'bolt' | 'yarn' | 'pnpm' | 'lerna' | 'npm'
 //   dir: '/Users/rosskevin/projects/archetype',     // the monorepo root directory
 // }
 ```

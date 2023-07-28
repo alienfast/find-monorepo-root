@@ -12,38 +12,38 @@ describe('findMonorepoRoot', () => {
   describe('should find root', () => {
     scenarios.forEach((scenario) => {
       describe(`using scenario ${scenario}`, () => {
-        const client = scenario.includes('-') ? scenario.split('-')[0] : scenario
+        const strategy = scenario.includes('-') ? scenario.split('-')[0] : scenario
         for (const pkg of packages) {
-          it(`from subdirectory ${client}/packages/${pkg}`, async () => {
-            const root = path.join(cwd, client)
+          it(`from subdirectory ${strategy}/packages/${pkg}`, async () => {
+            const root = path.join(cwd, strategy)
 
             const result = await findMonorepoRoot(path.join(root, 'packages', pkg))
-            expect(result.client).toBe(client)
+            expect(result.strategy).toBe(strategy)
             expect(result.dir).toBe(root)
           })
         }
 
         it(`from .`, async () => {
-          const root = path.join(cwd, client)
+          const root = path.join(cwd, strategy)
 
           const result = await findMonorepoRoot(root)
-          expect(result.client).toBe(client)
+          expect(result.strategy).toBe(strategy)
           expect(result.dir).toBe(root)
         })
 
-        it(`from non-package root subdirectory '${client}/packages/package-a/scripts'`, async () => {
-          const root = path.join(cwd, client)
+        it(`from non-package root subdirectory '${strategy}/packages/package-a/scripts'`, async () => {
+          const root = path.join(cwd, strategy)
 
           const result = await findMonorepoRoot(path.join(root, 'packages', 'package-a', 'scripts'))
-          expect(result.client).toBe(client)
+          expect(result.strategy).toBe(strategy)
           expect(result.dir).toBe(root)
         })
 
-        it(`from non-package root from subdirectory '${client}/scripts'`, async () => {
-          const root = path.join(cwd, client)
+        it(`from non-package root from subdirectory '${strategy}/scripts'`, async () => {
+          const root = path.join(cwd, strategy)
 
           const result = await findMonorepoRoot(path.join(root, 'scripts'))
-          expect(result.client).toBe(client)
+          expect(result.strategy).toBe(strategy)
           expect(result.dir).toBe(root)
         })
       })
