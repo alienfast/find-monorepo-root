@@ -39,12 +39,6 @@
   ],
   "repository": "https://github.com/alienfast/find-monorepo-root",
   "homepage": "https://github.com/alienfast/find-monorepo-root",
-  "maintainers": [
-    {
-      "name": "Kevin Ross",
-      "email": "kevin.ross@alienfast.com"
-    }
-  ],
   "bin": "./dist/bin/findMonorepoRoot.js",
   "devDependencies": {
     "@alienfast/eslint-config": "^4.0.7",
@@ -91,5 +85,6 @@
   "dependencies": {
     "find-up": "^6.3.0",
     "strip-json-comments": "^5.0.1"
-  }
+  },
+  "author": "Kevin Ross <kevin.ross@alienfast.com>"
 }
