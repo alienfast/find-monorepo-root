@@ -3,7 +3,7 @@ import path from 'node:path'
 
 import stripJsonComments from 'strip-json-comments'
 
-import { Lerna, Pkg, Result } from './types'
+import { Client, Lerna, Package, Result } from './types'
 
 export const exists = (dir: string, file: string) => fs.existsSync(path.join(dir, file))
 
@@ -20,14 +20,43 @@ export function readJson<T>(dir: string, file: string) {
   }
 }
 
-export const findYarn = (dir: string): Result<'yarn' | 'bolt'> | undefined => {
-  const pkg = readJson<Pkg>(dir, 'package.json')
-  if (pkg) {
-    if (pkg.workspaces || pkg.bolt) {
-      return { client: pkg.bolt ? 'bolt' : 'yarn', dir }
-    }
+const determinePackageManager = (pkg: Package, dir: string): Client | undefined => {
+  // console.log('dir', dir, pkg)
+  // in order to run the tests, we need to exclude our own package dir
+  if (process.env.NODE_ENV === 'test' && pkg.name === '@alienfast/find-monorepo-root') {
+    // console.log('bailing out on our own package dir')
+    return undefined
   }
+  if (pkg.packageManager && pkg.packageManager.includes('yarn')) {
+    // console.log('yarn packageManager')
+    return 'yarn'
+  } else if (pkg.bolt) {
+    return 'bolt'
+  } else if (exists(dir, 'pnpm-workspace.yaml')) {
+    return 'pnpm'
+  } else if (exists(dir, 'yarn.lock')) {
+    return 'yarn'
+  } else if (exists(dir, 'package-lock.json')) {
+    return 'npm'
+  } else if (pkg.workspaces) {
+    return 'yarn' // this could be true for npm as well, but we'll assume yarn and rely on lock file detection to capture npm
+  }
+
+  // throw new Error(`Could not determine package manager from ${dir}: ${JSON.stringify(pkg)}`)
   return undefined
+}
+
+export const findByPackageManager = (dir: string): Result<Client> | undefined => {
+  const pkg = readJson<Package>(dir, 'package.json')
+  if (!pkg) {
+    return undefined
+  }
+
+  const client = determinePackageManager(pkg, dir)
+  if (!client) {
+    return undefined
+  }
+  return { client, dir }
 }
 
 export const findLerna = (dir: string): Result<'lerna'> | undefined => {
@@ -37,13 +66,6 @@ export const findLerna = (dir: string): Result<'lerna'> | undefined => {
     if (lerna.useWorkspaces || lerna.packages) {
       return { client: 'lerna', dir }
     }
-  }
-  return undefined
-}
-
-export const findPnpm = (dir: string): Result<'pnpm'> | undefined => {
-  if (exists(dir, 'pnpm-workspace.yaml')) {
-    return { client: 'pnpm', dir }
   }
   return undefined
 }

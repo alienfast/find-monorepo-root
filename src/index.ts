@@ -1,14 +1,14 @@
 import { findUp } from 'find-up'
 
 import { Result } from './types'
-import { findLerna, findPnpm, findYarn } from './util'
+import { findByPackageManager, findLerna } from './util'
 
 export async function findMonorepoRoot(cwd: string): Promise<Result> {
   let ret: Result | undefined
 
   await findUp(
     async (parent) => {
-      ret = findLerna(parent) || findYarn(parent) || findPnpm(parent)
+      ret = findLerna(parent) || findByPackageManager(parent)
       return ret && ret.dir
     },
     { cwd, type: 'directory' },
@@ -16,7 +16,7 @@ export async function findMonorepoRoot(cwd: string): Promise<Result> {
 
   if (!ret) {
     throw new Error(
-      `No monorepo root could be found upwards from the directory ${cwd} using lerna, yarn, or pnpm as indicators.`,
+      `No monorepo root could be found upwards from the directory ${cwd} using lerna, yarn, pnpm, or npm as indicators.`,
     )
   }
 

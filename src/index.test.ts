@@ -6,12 +6,13 @@ import { findMonorepoRoot } from './index.js'
 
 const cwd = path.join(process.cwd(), 'test/workspaces')
 const packages = ['package-a', 'package-b', 'package-c']
-const clients = ['pnpm', 'yarn', 'bolt', 'lerna']
+const scenarios = ['pnpm', 'yarn', 'yarn-lock', 'yarn-packageManager', 'npm', 'bolt', 'lerna']
 
 describe('findMonorepoRoot', () => {
   describe('should find root', () => {
-    clients.forEach((client) => {
-      describe(`using ${client}`, () => {
+    scenarios.forEach((scenario) => {
+      describe(`using scenario ${scenario}`, () => {
+        const client = scenario.includes('-') ? scenario.split('-')[0] : scenario
         for (const pkg of packages) {
           it(`from subdirectory ${client}/packages/${pkg}`, async () => {
             const root = path.join(cwd, client)
@@ -54,6 +55,7 @@ describe('findMonorepoRoot', () => {
     const find = async () => {
       return findMonorepoRoot(path.join(root, 'packages', 'package-a'))
     }
+
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     expect(find).rejects.toThrowError(/No monorepo root could be found upwards/)
   })

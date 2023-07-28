@@ -7,7 +7,13 @@
 
 # @alienfast/find-monorepo-root
 
-Find the root directory of a monorepo using various strategies together to detect the path including Yarn workspaces, Bolt, Lerna or pnpm.
+Find the root directory of a monorepo using any of the following strategies:
+
+- Lerna
+- Yarn
+- Bolt
+- pnpm
+- npm
 
 ## Install
 

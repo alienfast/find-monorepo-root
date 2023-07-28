@@ -1,4 +1,4 @@
-export type Client = 'bolt' | 'yarn' | 'pnpm' | 'lerna'
+export type Client = 'bolt' | 'yarn' | 'pnpm' | 'lerna' | 'npm'
 
 export interface Result<T extends Client = Client> {
   client: T
@@ -10,7 +10,9 @@ export interface Lerna {
   packages?: string[]
 }
 
-export interface Pkg {
+export interface Package {
+  name: string
   workspaces?: any
   bolt?: any
+  packageManager?: string
 }
