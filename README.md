@@ -19,8 +19,21 @@ yarn install @alienfast/find-monorepo-root
 
 ### npx
 
+For easy use in a shell script anywhere in your monorepo, execute with the `-y`
+
 ```sh
-npx @alienfast/find-monorepo-root
+npx -y @alienfast/find-monorepo-root
+# output: /Users/rosskevin/projects/archetype
+```
+
+or
+
+```sh
+#!/usr/bin/env bash
+
+ROOT=`npx -y @alienfast/find-monorepo-root`
+
+echo "My monorepo root is ${ROOT}"
 ```
 
 ### Api
@@ -31,8 +44,8 @@ const cwd = process.cwd()
 
 console.log(await findMonorepoRoot(cwd))
 // {
-//   client: 'pnpm', // the monorepo client(pnpm, lerna, yarn, bolt)
-//   dir: 'xxx',     // the monorepo root directory
+//   client: 'lerna', // the monorepo client(pnpm, lerna, yarn, bolt)
+//   dir: '/Users/rosskevin/projects/archetype',     // the monorepo root directory
 // }
 ```
 
