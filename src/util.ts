@@ -21,14 +21,11 @@ export function readJson<T>(dir: string, file: string) {
 }
 
 const determinePackageManager = (pkg: Package, dir: string): Client | undefined => {
-  // console.log('dir', dir, pkg)
   // in order to run the tests, we need to exclude our own package dir
   if (process.env.NODE_ENV === 'test' && pkg.name === '@alienfast/find-monorepo-root') {
-    // console.log('bailing out on our own package dir')
     return undefined
   }
   if (pkg.packageManager && pkg.packageManager.includes('yarn')) {
-    // console.log('yarn packageManager')
     return 'yarn'
   } else if (pkg.bolt) {
     return 'bolt'
