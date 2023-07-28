@@ -39,9 +39,7 @@
   ],
   "repository": "https://github.com/alienfast/find-monorepo-root",
   "homepage": "https://github.com/alienfast/find-monorepo-root",
-  "bin": {
-    "find-monorepo-root": "./dist/bin/findMonorepoRoot.js"
-  },
+  "bin": "./dist/bin/findMonorepoRoot.js",
   "devDependencies": {
     "@alienfast/eslint-config": "^4.0.7",
     "@alienfast/tsconfig": "^1.0.1",
