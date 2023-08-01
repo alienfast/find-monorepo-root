@@ -6,7 +6,16 @@ import { findMonorepoRoot } from './index.js'
 
 const cwd = path.join(process.cwd(), 'test/workspaces')
 const packages = ['package-a', 'package-b', 'package-c']
-const scenarios = ['pnpm', 'yarn', 'yarn-lock', 'yarn-packageManager', 'npm', 'bolt', 'lerna']
+const scenarios = [
+  'pnpm',
+  'yarn',
+  'yarn-lock',
+  'yarn-packageManager',
+  'npm',
+  'bolt',
+  'lerna',
+  'lerna-sub-yarn-packageManager',
+]
 
 describe('findMonorepoRoot', () => {
   describe('should find root', () => {

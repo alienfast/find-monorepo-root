@@ -21,6 +21,7 @@
     "build:ide": "echo 'tsc -b' && tsc -b",
     "clean": "node ./scripts/clean.js",
     "clean:yarn": "node ./scripts/clean-yarn.js",
+    "reset": "node ./scripts/reset.js",
     "lint": "eslint . --cache --ext .js,.ts,.tsx",
     "lint:fix": "eslint . --cache --ext .js,.ts,.tsx --fix",
     "test": "vitest",

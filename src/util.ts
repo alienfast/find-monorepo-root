@@ -25,7 +25,8 @@ const determinePackageManager = (pkg: Package, dir: string): Strategy | undefine
   if (process.env.NODE_ENV === 'test' && pkg.name === '@alienfast/find-monorepo-root') {
     return undefined
   }
-  if (pkg.packageManager && pkg.packageManager.includes('yarn')) {
+  // sub-packages may have packageManager specified (e.g. setup for docker image build). We only want a yarn package with workspaces
+  if (pkg.packageManager && pkg.packageManager.includes('yarn') && pkg.workspaces) {
     return 'yarn'
   } else if (pkg.bolt) {
     return 'bolt'
