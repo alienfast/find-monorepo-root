@@ -59,4 +59,4 @@ PRs are accepted! This project is configured with `auto`, so feel free to submit
 
 ## Prior art
 
-This was originally forked from https://github.com/alienfast/find-monorepo-root because it a) did not work for me in it's current form; and b) I wanted to exec it simply with `npx`. Thanks to the original author and contributors.
+This was originally forked from https://github.com/bubkoo/find-monorepo-root/ because it a) did not work for me in it's current form; and b) I wanted to exec it simply with `npx`. Thanks to the original author and contributors.
