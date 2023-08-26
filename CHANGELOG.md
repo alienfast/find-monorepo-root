@@ -1,3 +1,15 @@
+# v1.0.3 (Sat Aug 26 2023)
+
+#### 🐛 Bug Fix
+
+- Publish on npm after default github [#2](https://github.com/alienfast/find-monorepo-root/pull/2) ([@rosskevin](https://github.com/rosskevin))
+
+#### Authors: 1
+
+- Kevin Ross ([@rosskevin](https://github.com/rosskevin))
+
+---
+
 # v1.0.2 (Tue Aug 01 2023)
 
 #### ⚠️ Pushed to `main`
