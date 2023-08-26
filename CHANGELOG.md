@@ -1,3 +1,15 @@
+# v1.0.8 (Sat Aug 26 2023)
+
+#### ⚠️ Pushed to `main`
+
+- export types for external use ([@rosskevin](https://github.com/rosskevin))
+
+#### Authors: 1
+
+- Kevin Ross ([@rosskevin](https://github.com/rosskevin))
+
+---
+
 # v1.0.7 (Sat Aug 26 2023)
 
 #### ⚠️ Pushed to `main`
