@@ -8,7 +8,8 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'ci skip') && !contains(github.event.head_commit.message, 'skip ci')"
     env:
       GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v3
 
@@ -35,5 +36,5 @@ jobs:
 
       # cannot run this on branches because it doesn't keep the canary version from auto shipit, can only secondarily publish to npm for main branch
       - name: Publish secondarily to npm
-        run: npm publish --access public --ignore-scripts --@alienfast:registry='https://registry.npmjs.org'
+        run: npm publish --access=public --ignore-scripts --@alienfast:registry='https://registry.npmjs.org'
         if: github.ref == 'refs/heads/main'
