@@ -1,3 +1,15 @@
+# v1.0.6 (Sat Aug 26 2023)
+
+#### ⚠️ Pushed to `main`
+
+- Set npm registry auth in .npmrc ([@rosskevin](https://github.com/rosskevin))
+
+#### Authors: 1
+
+- Kevin Ross ([@rosskevin](https://github.com/rosskevin))
+
+---
+
 # v1.0.5 (Sat Aug 26 2023)
 
 #### ⚠️ Pushed to `main`
