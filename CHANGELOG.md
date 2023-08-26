@@ -1,3 +1,16 @@
+# v1.0.7 (Sat Aug 26 2023)
+
+#### ⚠️ Pushed to `main`
+
+- I’m not crazy, NPM_TOKEN should work and is not filtered by gh ([@rosskevin](https://github.com/rosskevin))
+- link fix ([@rosskevin](https://github.com/rosskevin))
+
+#### Authors: 1
+
+- Kevin Ross ([@rosskevin](https://github.com/rosskevin))
+
+---
+
 # v1.0.6 (Sat Aug 26 2023)
 
 #### ⚠️ Pushed to `main`
