@@ -1,3 +1,15 @@
+# v1.0.5 (Sat Aug 26 2023)
+
+#### ⚠️ Pushed to `main`
+
+- Use NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} instead to see if npm recognizes it ([@rosskevin](https://github.com/rosskevin))
+
+#### Authors: 1
+
+- Kevin Ross ([@rosskevin](https://github.com/rosskevin))
+
+---
+
 # v1.0.4 (Sat Aug 26 2023)
 
 #### ⚠️ Pushed to `main`
