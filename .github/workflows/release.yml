@@ -30,4 +30,19 @@ jobs:
         with:
           commit_message: Apply yarn.lock changes
 
+      # publishes canaries and releases to github
       - run: yarn release
+
+      # cannot do this because it doesn't keep the canary version, can only secondarily publish to npm for main branch
+      # - name: Publish secondarily to npm
+      #   run: npm publish --access public --ignore-scripts --@alienfast:registry='https://registry.npmjs.org'
+
+  publish_npm:
+    runs-on: ubuntu-latest
+    needs: release
+    if: github.ref == 'refs/heads/main'
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    steps:
+      - name: Publish secondarily to npm
+        run: npm publish --access public --ignore-scripts --@alienfast:registry='https://registry.npmjs.org'
