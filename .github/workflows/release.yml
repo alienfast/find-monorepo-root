@@ -33,10 +33,13 @@ jobs:
       # publishes canaries and releases to github
       - run: yarn release
 
-  publish_npm:
-    runs-on: ubuntu-latest
-    needs: release
-    if: github.ref == 'refs/heads/main'
-    steps:
       - name: Publish secondarily to npm
         run: npm publish --access public --ignore-scripts --@alienfast:registry='https://registry.npmjs.org'
+
+  # publish_npm:
+  #   runs-on: ubuntu-latest
+  #   needs: release
+  #   if: github.ref == 'refs/heads/main'
+  #   steps:
+  #     - name: Publish secondarily to npm
+  #       run: npm publish --access public --ignore-scripts --@alienfast:registry='https://registry.npmjs.org'
