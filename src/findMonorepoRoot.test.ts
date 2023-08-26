@@ -2,7 +2,7 @@ import path from 'node:path'
 
 import { describe, expect, it } from 'vitest'
 
-import { findMonorepoRoot } from './index.js'
+import { findMonorepoRoot } from './findMonorepoRoot.js'
 
 const cwd = path.join(process.cwd(), 'test/workspaces')
 const packages = ['package-a', 'package-b', 'package-c']

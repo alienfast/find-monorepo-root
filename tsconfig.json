@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "@alienfast/tsconfig/node.json",
 
-  "include": ["src", "./typings/**/*", "src/index.test.ts"],
+  "include": ["src", "./typings/**/*", "src/findMonorepoRoot.test.ts"],
   "exclude": ["node_modules", "dist"],
   "compilerOptions": {
     "outDir": "dist",
