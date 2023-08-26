@@ -25,7 +25,7 @@
     "lint": "eslint . --cache --ext .js,.ts,.tsx",
     "lint:fix": "eslint . --cache --ext .js,.ts,.tsx --fix",
     "test": "vitest",
-    "release": "yarn auto shipit"
+    "release": "yarn auto shipit && npm publish --access public --ignore-scripts --@alienfast:registry='https://registry.npmjs.org'"
   },
   "keywords": [
     "monorepo",
