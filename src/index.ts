@@ -3,6 +3,8 @@ import { findUp } from 'find-up'
 import { Result } from './types'
 import { findByPackageManager, findLerna } from './util'
 
+export * from './types'
+
 export async function findMonorepoRoot(cwd: string): Promise<Result> {
   let ret: Result | undefined
 
