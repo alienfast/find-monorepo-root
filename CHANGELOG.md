@@ -1,3 +1,15 @@
+# v2.0.0 (Tue Nov 24 2026)
+
+#### 💥 Breaking Change
+
+- Standardize tooling on pnpm 12, Biome and tsdown, and publish to npm via OIDC [#4](https://github.com/alienfast/find-monorepo-root/pull/4) ([@rosskevin](https://github.com/rosskevin))
+
+#### Authors: 1
+
+- Kevin Ross ([@rosskevin](https://github.com/rosskevin))
+
+---
+
 # v1.0.9 (Sat Aug 26 2023)
 
 #### ⚠️ Pushed to `main`
