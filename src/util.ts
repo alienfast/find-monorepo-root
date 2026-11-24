@@ -3,7 +3,7 @@ import path from 'node:path'
 
 import stripJsonComments from 'strip-json-comments'
 
-import { Lerna, Package, Result, Strategy } from './types'
+import type { Lerna, Package, Result, Strategy } from './types.ts'
 
 export const exists = (dir: string, file: string) => fs.existsSync(path.join(dir, file))
 
@@ -26,7 +26,7 @@ const determinePackageManager = (pkg: Package, dir: string): Strategy | undefine
     return undefined
   }
   // sub-packages may have packageManager specified (e.g. setup for docker image build). We only want a yarn package with workspaces
-  if (pkg.packageManager && pkg.packageManager.includes('yarn') && pkg.workspaces) {
+  if (pkg.packageManager?.includes('yarn') && pkg.workspaces) {
     return 'yarn'
   } else if (pkg.bolt) {
     return 'bolt'
@@ -54,7 +54,7 @@ export const findByPackageManager = (dir: string): Result<Strategy> | undefined 
   if (!strategy) {
     return undefined
   }
-  return { strategy, dir }
+  return { dir, strategy }
 }
 
 export const findLerna = (dir: string): Result<'lerna'> | undefined => {
@@ -62,7 +62,7 @@ export const findLerna = (dir: string): Result<'lerna'> | undefined => {
   // https://lerna.js.org/docs/api-reference/configuration
   if (lerna) {
     if (lerna.useWorkspaces || lerna.packages) {
-      return { strategy: 'lerna', dir }
+      return { dir, strategy: 'lerna' }
     }
   }
   return undefined

@@ -2,8 +2,7 @@
 
 import * as process from 'node:process'
 
-import { findMonorepoRoot } from '..'
+import { findMonorepoRoot } from '../index.ts'
 
 const result = await findMonorepoRoot(process.cwd())
-// eslint-disable-next-line no-console
 console.log(result.dir)

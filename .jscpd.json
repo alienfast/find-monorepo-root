@@ -1,0 +1,9 @@
+{
+  "crossFormats": "typescript,tsx",
+  "format": ["typescript", "tsx"],
+  "ignore": ["**/dist/**", "**/node_modules/**", ".claude/worktrees/**", "tmp/**"],
+  "ignorePattern": ["(?m)^import\\s[^;']*?from\\s+'[^']+'"],
+  "minLines": 10,
+  "path": ["."],
+  "pattern": "{src,tools}/**/*.{ts,tsx,mts,cts}"
+}

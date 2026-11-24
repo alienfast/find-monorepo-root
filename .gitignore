@@ -1,37 +1,19 @@
 *.log
-tmp
+.DS_Store
 .idea
-.storybook-out
-env-*.txt
-packages/*/dist
-packages/*/.rpt2_cache
-# local runs
-test-report.xml
-# ci runs
-test-results
+/coverage
 /dist
-**/__generated__/*.json
-.eslintcache
-tsconfig.tsbuildinfo
-tmp
-
-# yarn zero install enabled
-.pnp.*
-.yarn/*
-#!.yarn/cache
-!.yarn/unplugged
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
-
-
 node_modules
+test-report.xml
+test-results
+tmp
+*.tsbuildinfo
 
-# ci will cache these instead
-.yarn/cache
+.claude/plans
+.claude/settings.local.json
+.claude/worktrees
 
-# releaseFinalize
-packages/*/LICENSE
-packages/*/.npmignore
+# git hands a merge driver %A as a `.merge_file_*` temp in the worktree root, and merge-jscpd-baseline.mjs stages its result beside it; a kill between write and rename leaves it behind
+/.merge_file_*
+# check-clones.mjs --update stages the new baseline beside it; a signal kill before the rename leaves the staged copy behind
+/.jscpd-baseline.json.staged-*

@@ -2,7 +2,7 @@ import path from 'node:path'
 
 import { describe, expect, it } from 'vitest'
 
-import { findMonorepoRoot } from './findMonorepoRoot.js'
+import { findMonorepoRoot } from './findMonorepoRoot.ts'
 
 const cwd = path.join(process.cwd(), 'test/workspaces')
 const packages = ['package-a', 'package-b', 'package-c']
@@ -61,19 +61,14 @@ describe('findMonorepoRoot', () => {
 
   it(`should throw error when no match is found`, async () => {
     const root = path.join(cwd, 'noMatch')
-    const find = async () => {
-      return findMonorepoRoot(path.join(root, 'packages', 'package-a'))
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    expect(find).rejects.toThrowError(/No monorepo root could be found upwards/)
+    await expect(findMonorepoRoot(path.join(root, 'packages', 'package-a'))).rejects.toThrow(
+      /No monorepo root could be found upwards/,
+    )
   })
 
   it('should throw error when package.json is broken', async () => {
-    const find = async () => {
-      return findMonorepoRoot(path.join(cwd, 'bad'))
-    }
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    expect(find).rejects.toThrowError(/SyntaxError: Unexpected token a in JSON/)
+    await expect(findMonorepoRoot(path.join(cwd, 'bad'))).rejects.toThrow(
+      /SyntaxError: .+ Error reading .*bad\/package\.json/,
+    )
   })
 })

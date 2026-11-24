@@ -1,0 +1,27 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.6.8/schema.json",
+  "extends": ["@alienfast/biome-config/base"],
+  "files": {
+    "includes": [
+      "**",
+      "!dist",
+      "!coverage",
+      // Monorepo fixtures the tests walk; bad/package.json is deliberately invalid JSON.
+      "!test/workspaces",
+      // The clone-gate tests compare the baseline byte for byte, so Biome must not reformat it.
+      "!.jscpd-baseline.json",
+      // Biome 2.6 formats YAML and Markdown by default; markdownlint-cli2 owns Markdown and pnpm writes pnpm-lock.yaml.
+      "!**/*.yml",
+      "!**/*.yaml",
+      "!**/*.md",
+      "!.claude/worktrees",
+      "!tmp"
+    ]
+  },
+  "linter": {
+    "rules": {
+      "correctness": { "noUnresolvedImports": "off" }
+    }
+  },
+  "vcs": { "clientKind": "git", "enabled": true, "useIgnoreFile": true }
+}

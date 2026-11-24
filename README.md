@@ -55,8 +55,8 @@ console.log(await findMonorepoRoot(cwd))
 
 ## Contributing
 
-PRs are accepted! This project is configured with `auto`, so feel free to submit a PR and `auto` will automatically create a `canary` release for you to try out.
+PRs are accepted! Releases are cut by `auto` when a PR merges to `main`, and published to npm through trusted publishing.
 
 ## Prior art
 
-This was originally forked from https://github.com/bubkoo/find-monorepo-root/ because it a) did not work for me in it's current form; and b) I wanted to exec it simply with `npx`. Thanks to the original author and contributors.
+This was originally forked from <https://github.com/bubkoo/find-monorepo-root/> because it a) did not work for me in it's current form; and b) I wanted to exec it simply with `npx`. Thanks to the original author and contributors.

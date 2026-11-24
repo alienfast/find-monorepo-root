@@ -1,86 +1,84 @@
 {
-  "name": "@alienfast/find-monorepo-root",
-  "version": "1.0.9",
-  "packageManager": "yarn@3.6.1",
+  "author": "Kevin Ross <kevin.ross@alienfast.com>",
+  "auto": {
+    "plugins": [
+      [
+        "npm",
+        {
+          "setRcToken": false
+        }
+      ],
+      "all-contributors",
+      "first-time-contributor",
+      "released"
+    ]
+  },
+  "bin": "./dist/bin/findMonorepoRoot.mjs",
+  "dependencies": {
+    "find-up": "^8.0.0",
+    "strip-json-comments": "^5.1.0"
+  },
   "description": "Find the root path of a monorepo using various strategies.",
-  "type": "module",
-  "main-note": "Though this is ESM only, the following main is to appease tsc and varieties of moduleResolution e.g. node vs nodenext, otherwise types aren't found. see https://github.com/rosskevin/ts-esm-workspaces/tree/bug-main-required-to-build#workaround ",
-  "main": "./dist/index.js",
+  "devDependencies": {
+    "@alienfast/biome-config": "^1.0.7",
+    "@alienfast/tsconfig": "^1.0.8",
+    "@auto-it/all-contributors": "^11.3.6",
+    "@auto-it/first-time-contributor": "^11.3.6",
+    "@auto-it/released": "^11.3.6",
+    "@biomejs/biome": "^2.6.8",
+    "@types/node": "^26.6.6",
+    "auto": "^11.3.6",
+    "execa": "^10.2.1",
+    "jscpd": "^5.4.3",
+    "madge": "^8.0.0",
+    "markdownlint-cli2": "^0.24.1",
+    "npm-run-all2": "^9.0.4",
+    "rimraf": "^6.1.4",
+    "tsdown": "^0.23.7",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  },
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.mts"
     }
   },
-  "sideEffects": false,
-  "publishConfig": {
-    "access": "public"
-  },
-  "scripts": {
-    "build": "yarn clean && tsup-node",
-    "build:ide": "echo 'tsc -b' && tsc -b",
-    "clean": "node ./scripts/clean.js",
-    "clean:yarn": "node ./scripts/clean-yarn.js",
-    "reset": "node ./scripts/reset.js",
-    "lint": "eslint . --cache --ext .js,.ts,.tsx",
-    "lint:fix": "eslint . --cache --ext .js,.ts,.tsx --fix",
-    "test": "vitest",
-    "release": "yarn auto shipit"
-  },
+  "homepage": "https://github.com/alienfast/find-monorepo-root",
   "keywords": [
     "monorepo",
     "find",
     "root"
   ],
   "license": "MIT",
+  "main": "./dist/index.mjs",
+  "main-note": "Though this is ESM only, the following main is to appease tsc and varieties of moduleResolution e.g. node vs nodenext, otherwise types aren't found. see https://github.com/rosskevin/ts-esm-workspaces/tree/bug-main-required-to-build#workaround ",
+  "name": "@alienfast/find-monorepo-root",
+  "packageManager": "pnpm@12.21.0+sha512.66fd8278ee28935ce951792d34367ff3af5c432a2756445823029533835b8da529bbe0be5130afd56ed0713fb8789e47bad82d93bd5ae2fe54b15562d6276ef0",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": "https://github.com/alienfast/find-monorepo-root",
-  "homepage": "https://github.com/alienfast/find-monorepo-root",
-  "bin": "./dist/bin/findMonorepoRoot.js",
-  "devDependencies": {
-    "@alienfast/eslint-config": "^4.0.7",
-    "@alienfast/tsconfig": "^1.0.1",
-    "@auto-it/all-contributors": "^10.46.0",
-    "@auto-it/first-time-contributor": "^10.46.0",
-    "@auto-it/released": "^10.46.0",
-    "@types/fs-extra": "^11.0.1",
-    "@types/marked": "^5",
-    "@types/marked-terminal": "^3.1.3",
-    "auto": "^10.46.0",
-    "eslint": "^8.43.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-import-resolver-typescript": "^3.5.5",
-    "eslint-plugin-eslint-comments": "^3.2.0",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-jest": "^27.2.2",
-    "eslint-plugin-n": "^16.0.1",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-simple-import-sort": "^10.0.0",
-    "eslint-plugin-storybook": "^0.6.12",
-    "eslint-plugin-unicorn": "^47.0.0",
-    "eslint-plugin-unused-imports": "^2.0.0",
-    "execa": "^7.1.1",
-    "husky": "^8.0.3",
-    "lint-staged": "^13.2.2",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^2.8.8",
-    "rimraf": "^5.0.1",
-    "tsup": "^7.1.0",
-    "typescript": "^5.1.3",
-    "vite": "^4.3.9",
-    "vitest": "^0.32.2"
+  "scripts": {
+    "build": "tsdown",
+    "check": "run-p -c --aggregate-output check-types check-biome check-circular check-clones check-markdown test test-tools",
+    "check-biome": "biome check --write",
+    "check-circular": "madge --circular --extensions ts ./src",
+    "check-clones": "node .claude/rules/check-clones.mjs --self-test && node .claude/rules/check-clones.mjs",
+    "check-markdown": "markdownlint-cli2 --fix '**/*.md'",
+    "check-types": "tsc --noEmit",
+    "clean": "node ./scripts/clean.js",
+    "clean-pnpm": "node ./scripts/clean-pnpm.js",
+    "prepare": "git config --replace-all merge.jscpd-baseline.name 'set-of-fingerprints merge for the committed jscpd clone baseline' || true; git config --replace-all merge.jscpd-baseline.driver 'node tools/scripts/merge-jscpd-baseline.mjs %O %A %B %L %P; rc=$?; [ \"$rc\" -le 1 ] && [ -f tools/scripts/merge-jscpd-baseline.mjs ] && exit \"$rc\"; git merge-file -L ours -L base -L theirs --marker-size=%L \"%A\" \"%O\" \"%B\"' || true",
+    "release": "auto shipit",
+    "reset": "node ./scripts/reset.js",
+    "test": "vitest run",
+    "test-tools": "vitest run --config tools/scripts/vitest.config.ts"
   },
-  "auto": {
-    "plugins": [
-      "npm",
-      "all-contributors",
-      "first-time-contributor",
-      "released"
-    ]
-  },
-  "dependencies": {
-    "find-up": "^6.3.0",
-    "strip-json-comments": "^5.0.1"
-  },
-  "author": "Kevin Ross <kevin.ross@alienfast.com>"
+  "sideEffects": false,
+  "type": "module",
+  "version": "1.0.9"
 }
