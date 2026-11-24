@@ -1,7 +1,7 @@
 import { findUp } from 'find-up'
 
-import { Result } from './types'
-import { findByPackageManager, findLerna } from './util'
+import type { Result } from './types.ts'
+import { findByPackageManager, findLerna } from './util.ts'
 
 export async function findMonorepoRoot(cwd: string): Promise<Result> {
   let ret: Result | undefined
@@ -9,7 +9,7 @@ export async function findMonorepoRoot(cwd: string): Promise<Result> {
   await findUp(
     async (parent) => {
       ret = findLerna(parent) || findByPackageManager(parent)
-      return ret && ret.dir
+      return ret?.dir
     },
     { cwd, type: 'directory' },
   )

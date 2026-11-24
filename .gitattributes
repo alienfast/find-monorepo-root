@@ -1,0 +1,18 @@
+# `merge=jscpd-baseline` runs tools/scripts/merge-jscpd-baseline.mjs on the committed clone baseline. The file is a set of
+# fingerprints with a pair count each, so it merges as one: per fingerprint, ours + theirs - base, kept when positive. A
+# removal on either side drops it, an addition on either side keeps it. A line-based merge conflicts here far more often
+# than not, because every consolidation regenerates the file and hashes sort randomly, so removals from parallel branches
+# land on adjacent lines. A side that is not a baseline, or a version mismatch, stops as a conflict whose file cannot parse
+# as a baseline. The result is exactly what regenerating from the merged tree gives only when the two sides change disjoint
+# clone groups; a count map cannot see the merged tree, so otherwise the merge can leave a count short (the `check-clones`
+# lane in `pnpm check` goes red on the merged tree: run `node .claude/rules/check-clones.mjs --update` there) or stale (the
+# lane stays green and the baseline over-allows until an `--update` drops it: run one on main after a batch of merges).
+#
+# The driver is registered per clone by the root `prepare` script (runs on every pnpm install), unchained. A clone that has
+# not run it has no `jscpd-baseline` driver defined, and git falls back to its DEFAULT three-way merge — clean on disjoint
+# changes, ordinary conflict markers on overlapping ones. Never a silent keep, so an unregistered clone is degraded, not
+# dangerous.
+#
+# `-X theirs` / `-X ours` do NOT reach this file: a strategy option is ignored wherever a custom driver owns the path. Take a
+# side with `git checkout --theirs -- .jscpd-baseline.json` (or `--ours`), then regenerate.
+/.jscpd-baseline.json        merge=jscpd-baseline

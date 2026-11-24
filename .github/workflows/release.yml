@@ -1,39 +1,48 @@
 name: Release
 
-on: [push]
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Keyless: auto uses the job's built-in GITHUB_TOKEN, and npmjs.org auth is OIDC trusted publishing — no stored secrets.
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  id-token: write # auto's npm plugin runs `npm publish`, and the npm CLI exchanges this for a short-lived npm token
 
 jobs:
   release:
     runs-on: ubuntu-latest
     if: "!contains(github.event.head_commit.message, 'ci skip') && !contains(github.event.head_commit.message, 'skip ci')"
     env:
-      GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Prepare repository
-        run: git fetch --unshallow --tags
-
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v7
         with:
-          node-version: 16
-          cache: 'yarn'
+          fetch-depth: 0
 
-      # allow the lock file to change (updating our own workspace versions in monorepo)
-      - run: yarn install --no-immutable
-      - run: yarn build
-      - run: yarn test
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          # Pin 24.18.0+: Node 24.17.0 carries an http.Agent regression that makes node-fetch@2 (auto's pinned
+          # octokit) throw false ERR_STREAM_PREMATURE_CLOSE on keep-alive socket reuse — nodejs/node#63989, fixed in 24.18.0.
+          node-version: 24.18.0
+          cache: 'pnpm'
+
+      # allow the lock file to change
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm test
+      - run: pnpm build
 
       # commit back the lock file change if it works
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: stefanzweifel/git-auto-commit-action@v7
         with:
-          commit_message: Apply yarn.lock changes
+          commit_message: Apply pnpm-lock.yaml changes
 
-      # publishes canaries and releases to github
-      - run: yarn release
+      # A single package, so auto's npm plugin runs plain `npm publish` and the npm CLI performs the OIDC exchange itself (npm >= 11.5.1).
+      - run: npm install --global npm@latest
 
-      # cannot run this on branches because it doesn't keep the canary version from auto shipit, can only secondarily publish to npm for main branch
-      - name: Publish secondarily to npm
-        run: npm publish --access=public --ignore-scripts --@alienfast:registry='https://registry.npmjs.org'
-        if: github.ref == 'refs/heads/main'
+      - run: pnpm release

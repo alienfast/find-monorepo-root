@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -10,7 +9,7 @@ console.log('Resetting...')
 
 const dir = dirname(fileURLToPath(import.meta.url))
 
-await Promise.all([$$`node ${dir}/clean.js`, $$`node ${dir}/clean-yarn.js`])
+await Promise.all([$$`node ${dir}/clean.js`, $$`node ${dir}/clean-pnpm.js`])
 
 console.log('Installing...')
-await $$`yarn install`
+await $$`pnpm install`
